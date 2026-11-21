@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: a60f8e46820ea466ef0868a20e79d739_f6db118be59611f184bd52540072b1e8
-    ReservedCode1: eaMBiSQteNrqjn2a66TRddZPZ9V/rMEiAwKDUkGqUpSV2RvD4tIL2Fgs2AMkfkXJOQbNeD+IvoKTRYTlwcJ1NEyavOLI27SUvyh5kyApRaBKNiM2G+gRD9kosguATmQ50594moZCyXx86MH1WFFWU4V+OWw7spZJXTMpsIJ6pHntIgx7IVHMat6nDvg=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: a60f8e46820ea466ef0868a20e79d739_f6db118be59611f184bd52540072b1e8
-    ReservedCode2: eaMBiSQteNrqjn2a66TRddZPZ9V/rMEiAwKDUkGqUpSV2RvD4tIL2Fgs2AMkfkXJOQbNeD+IvoKTRYTlwcJ1NEyavOLI27SUvyh5kyApRaBKNiM2G+gRD9kosguATmQ50594moZCyXx86MH1WFFWU4V+OWw7spZJXTMpsIJ6pHntIgx7IVHMat6nDvg=
----
-
 # Tool reference
 
 Every tool is gated by `PermissionPolicy` before the Google call and audited afterwards. `Policy` is the key that must
@@ -96,4 +85,3 @@ Registered tools: **44**.
 - `https://www.googleapis.com/auth/drive.readonly`
 - `https://www.googleapis.com/auth/gmail.readonly`
 - `https://www.googleapis.com/auth/spreadsheets.readonly`
-*（内容由AI生成，仅供参考）*
