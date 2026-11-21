@@ -3,6 +3,23 @@
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com)
 and the project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+
+### Fixed
+
+- `Retry-After` sent as an HTTP-date (RFC 9110 form) was silently ignored, so a rate-limited call fell back to
+  exponential back-off and re-hit the API too early. Both `delay-seconds` and `HTTP-date` are now parsed, and
+  past dates resolve to zero wait.
+- An unbounded honoured `Retry-After` could stall an MCP tool call for minutes. Delays are now clamped to
+  `RETRY_AFTER_CEILING` (120 s) and the clamp is logged as `retry_after_clamped`.
+
+### Added
+
+- `tests/test_retry.py` (15 cases): retryable vs non-retryable statuses, idempotency guard, back-off bounds and
+  jitter, both `Retry-After` forms, ceiling clamping, malformed headers, attempt budget, and pass-through of our
+  own error types. Five of these cases fail against the previous implementation.
+- README "Retry and rate-limit behaviour" section documenting what is retried and why.
+
 ## [0.1.0] - 2026-11-21
 
 ### Added

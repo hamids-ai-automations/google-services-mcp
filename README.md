@@ -136,6 +136,25 @@ Read [docs/security.md](docs/security.md) and [SECURITY.md](SECURITY.md). Short 
 4. Destructive tools require `confirm: true`; writes default to `dry_run: true`.
 5. Returned Google content is treated as data: wrapped, control-stripped, truncated, never executed.
 
+## Retry and rate-limit behaviour
+
+Every Google API call goes through `google_services_mcp.retry.execute_with_retry`:
+
+- **What is retried.** Only `429`, `500`, `502`, `503`, `504` (and transport errors with no HTTP status) are retried,
+  and only for idempotent operations. Non-idempotent calls (`gmail_send_message`, event creation without a stable id)
+  fail fast — a duplicate side effect is worse than a visible error.
+- **How long we wait.** When Google sends `Retry-After`, it is honoured in **both** RFC 9110 forms: `delay-seconds`
+  (`Retry-After: 7`) and `HTTP-date` (`Retry-After: Sat, 21 Nov 2026 12:00:30 GMT`). Anything above
+  `RETRY_AFTER_CEILING` (120 s) is clamped and logged as `retry_after_clamped`, because a single MCP tool call must not
+  block for minutes. Without a hint, back-off is exponential from `backoff_base_seconds` with ±25 % jitter, capped at
+  `backoff_max_seconds`.
+- **How many attempts.** `max_retries` (default 3) plus the initial attempt; the last failure surfaces as a typed
+  `GoogleServicesMCPError` whose `retryable` flag tells the client whether a retry is worth trying.
+
+```bash
+.\.venv\Scripts\python.exe -m pytest tests\test_retry.py -q   # 15 cases, no network, no real sleeping
+```
+
 ## Development
 
 ```bash
