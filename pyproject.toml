@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "google-services-mcp"
+version = "0.1.0"
+description = "A permission-controlled MCP gateway that gives AI agents scoped, auditable access to Google Drive, Sheets, Gmail, Calendar and Docs."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Muhammad Hamid", url = "https://github.com/hamids-ai-automations" }]
+keywords = ["mcp", "model-context-protocol", "google-apis", "google-workspace", "oauth2", "ai-agents"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = [
+  "mcp>=2.3.0,<3",
+  "google-api-python-client>=2.202.0",
+  "google-auth>=2.63.0",
+  "google-auth-oauthlib>=1.5.0",
+  "pydantic>=2.11,<3",
+  "PyYAML>=6.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.24",
+  "ruff>=0.6",
+  "build>=1.2",
+]
+
+[project.urls]
+Homepage = "https://marvis.web.app/projects/google-services-mcp/"
+Repository = "https://github.com/hamids-ai-automations/google-services-mcp"
+Documentation = "https://github.com/hamids-ai-automations/google-services-mcp/tree/main/docs"
+Issues = "https://github.com/hamids-ai-automations/google-services-mcp/issues"
+
+[project.scripts]
+google-services-mcp = "google_services_mcp.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["google_services_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["google_services_mcp", "config", "docs", "tests", "README.md", "LICENSE", "CHANGELOG.md", "SECURITY.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+filterwarnings = ["ignore::DeprecationWarning"]
+# Keep runs hermetic: no re-used session directories (windows raises PermissionError when
+# pytest tries to clear a basetemp it does not fully own) and never keep tmp data around.
+tmp_path_retention_policy = "none"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]

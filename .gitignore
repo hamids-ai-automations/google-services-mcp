@@ -1,0 +1,41 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.pytest_tmp*/
+.pytest_run_*/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Secrets (never commit) ---
+.env
+.env.*
+!.env.example
+client_secrets.json
+*client_secret*.json
+credentials.json
+token.json
+oauth-token.json
+*.pem
+*.key
+service-account*.json
+
+# --- Runtime artefacts ---
+logs/
+*.jsonl
+audit*.log
+.deploy/
+downloads/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
